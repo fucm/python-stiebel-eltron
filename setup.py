@@ -23,7 +23,7 @@ setup(
     long_description=long_description,
     url='https://github.com/fucm/python-stiebel-eltron',
     author='Martin Fuchs',
-    author_email='mail-addr',
+    author_email='mail-addrr',
     license='MIT',
     install_requires=[],
     packages=find_packages(),
