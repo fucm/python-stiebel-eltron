@@ -17,7 +17,7 @@ if sys.argv[-1] == 'publish':
     sys.exit()
 
 setup(
-    name='python-stiebel-eltron',
+    name='pystiebeleltron',
     version='0.0.1.dev0',
     description='Python API for interacting with the Stiebel Eltron ISG web gateway via Modbus for controlling integral ventilation units and heat pumps.',
     long_description=long_description,
