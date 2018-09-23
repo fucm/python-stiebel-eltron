@@ -1,2 +1,2 @@
-# python-stiebel-eltron
+# python-stiebel-eltron |License| |PyPI|
 Python API for interacting with the Stiebel Eltron ISG web gateway via Modbus for controlling integral ventilation units and heat pumps.
