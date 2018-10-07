@@ -1,5 +1,5 @@
 """
-Copyright (c) 2018 Martin Fuchs <mail-addr>
+Copyright (c) 2018 Martin Fuchs <martin.fuchs@gmx.ch>
 Licensed under MIT. All rights reserved.
 """
 import os
@@ -23,13 +23,13 @@ setup(
     long_description=long_description,
     url='https://github.com/fucm/python-stiebel-eltron',
     author='Martin Fuchs',
-    author_email='mail-addrr',
+    author_email='martin.fuchs@gmx.ch',
     license='MIT',
     install_requires=[],
     packages=find_packages(),
     zip_safe=True,
     include_package_data=True,
-    """ https://pypi.org/classifiers/ """
+    # https://pypi.org/classifiers/
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',

@@ -173,7 +173,7 @@ B3_BUS_STATUS = {
 
 
 class StiebelEltronAPI(object):
-    """API object."""
+    """Stiebel Eltron API."""
 
     def __init__(self, conn, slave, update_on_read=False):
         """Initialize Stiebel Eltron communication."""
@@ -194,6 +194,7 @@ class StiebelEltronAPI(object):
         self._cooling = None
         self._alarm = False
         self._update_on_read = update_on_read
+
 
     def update(self):
         """Request current values from heat pump."""
@@ -322,14 +323,14 @@ class StiebelEltronAPI(object):
 
     @property
     def get_current_temp(self):
-        """Get the current temperature."""
+        """Get the current room temperature."""
         if self._update_on_read:
             self.update()
         return self._current_temp
 
     @property
     def get_target_temp(self):
-        """Get target temperature."""
+        """Get the target room temperature."""
         if self._update_on_read:
             self.update()
         return self._target_temp
