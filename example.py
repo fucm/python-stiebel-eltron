@@ -16,42 +16,27 @@ def test_function(mod, fun):
 def execute_tests(unit):
     """Execute the provided tests."""
     test_function(unit, "get_current_temp")
+    test_function(unit, "get_current_humidity")
     test_function(unit, "get_target_temp")
     test_function(unit, "get_operation")
-    test_function(unit, "get_filter_alarm")
+    test_function(unit, "get_filter_alarm_status")
+    test_function(unit, "get_heating_status")
+    test_function(unit, "get_cooling_status")
 
-    if False:
-        print("unit.get_fan_speed {}".format(unit.get_fan_speed))
-        print("unit.get_heat_recovery {}".format(unit.get_heat_recovery))
-        print("unit.get_heating {}".format(unit.get_heating))
-        print("unit.get_heater_enabled {}".format(unit.get_heater_enabled))
-        print("unit.get_cooling {}".format(unit.get_cooling))
-        print("unit.get_filter_alarm {}".format(unit.get_filter_alarm))
-
-
-        print("Setting fan to 3")
-        unit.set_fan_speed(3)
+    # Test set_target_temp
+    print("Setting temperature to 20.0")
+    current_temp = unit.get_target_temp
+    unit.set_target_temp(20.0)
+    time.sleep(3)
+    unit.update()
+    mod_temp = unit.get_target_temp
+    if mod_temp != 20.0:
+        print("unit.set_target_temp failed!")
+    if mod_temp != current_temp:
+        unit.set_target_temp(current_temp)
         time.sleep(3)
         unit.update()
-        print("unit.get_fan_speed {}".format(unit.get_fan_speed))
-
-        print("Setting fan to 2")
-        unit.set_fan_speed(2)
-        time.sleep(3)
-        unit.update()
-        print("unit.get_fan_speed {}".format(unit.get_fan_speed))
-
-        print("Setting fan to 3 with set_raw_holding_register()")
-        unit.set_raw_holding_register('SetAirSpeed', 3)
-        time.sleep(2)
-        unit.update()
-        print("unit.get_fan_speed {}".format(unit.get_fan_speed))
-
-        print("Setting fan to 2 with set_raw_holding_register()")
-        unit.set_raw_holding_register('SetAirSpeed', 2)
-        time.sleep(2)
-        unit.update()
-        print("unit.get_fan_speed {}".format(unit.get_fan_speed))
+    print("get_target_temp: {}".format(unit.get_target_temp))
 
 
 def main():
@@ -67,5 +52,5 @@ def main():
 
     client.close()
 
-if __name__ is "__main__":
+if __name__ == "__main__":
     main()

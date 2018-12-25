@@ -17,13 +17,20 @@ type | range      | for reading | for writing |        | size 1 | size 5
 8    | 0 to 255   | 1           | 1           | No     | 1      | 5
 """
 
+"""Error - sensor lead is missing or disconnected."""
+ERROR_NOTAVAILABLE = -60
+"""Error - short circuit of the sensor lead."""
+ERROR_SHORTCUT = -50
+"""Error - object unavailable."""
+ERROR_OBJ_UNAVAILBLE = 0x8000
+
 UNAVAILABLE_OBJECT = 32768
 
 # Block 1 System values (Read input register) - page 29
-#   Object designation                  Modbus address
 B1_START_ADDR = 0
 
 B1_REGMAP_INPUT = {
+    # HC = Heating Circuit
     'ACTUAL_ROOM_TEMPERATURE_HC1':      {'addr':  0, 'type': 2, 'value': 0},
     'SET_ROOM_TEMPERATURE_HC1':         {'addr':  1, 'type': 2, 'value': 0},
     'RELATIVE_HUMIDITY_HC1':            {'addr':  2, 'type': 2, 'value': 0},
@@ -182,17 +189,6 @@ class StiebelEltronAPI(object):
         self._block_2_holding_regs = B2_REGMAP_HOLDING
         self._block_3_input_regs = B3_REGMAP_INPUT
         self._slave = slave
-        self._target_temp = None
-        self._current_temp = None
-        self._current_fan = None
-        self._current_operation = None
-        self._filter_hours = None
-        self._filter_alarm = None
-        self._heat_recovery = None
-        self._heater_enabled = False
-        self._heating = None
-        self._cooling = None
-        self._alarm = False
         self._update_on_read = update_on_read
 
 
@@ -232,49 +228,18 @@ class StiebelEltronAPI(object):
                     block_3_result_input[
                         self._block_3_input_regs[k]['addr'] - B3_START_ADDR]
 
-        self._target_temp = self.get_conv_val('SET_ROOM_TEMPERATURE_HC1')
-        # Temperature directly after heat recovery and heater
-        self._current_temp = self.get_conv_val('ACTUAL_ROOM_TEMPERATURE_HC1')
-        # self._current_fan = \
-        #    (self._input_regs['ActualSetAirSpeed']['value'])
-        # Hours since last filter reset
-        # self._filter_hours = \
-        #    self._input_regs['FilterTimer']['value']
-        # Mechanical heat recovery, 0-100%
-        # self._heat_recovery = \
-        #    self._input_regs['HeatExchanger']['value']
-        # Heater active 0-100%
-        # self._heating = \
-        #    self._input_regs['Heating']['value']
-        # Cooling active 0-100%
-        # self._cooling = \
-        #    self._input_regs['Cooling']['value']
-        # Filter alarm 0/1
-        filter_mask = B3_OPERATING_STATUS['FILTER'] |\
-            B3_OPERATING_STATUS['FILTER_EXTRACT_AIR'] |\
-            B3_OPERATING_STATUS['FILTER_VENTILATION_AIR']
-        self._filter_alarm = \
-            bool(self.get_conv_val('OPERATING_STATUS') & filter_mask)
-        # Heater enabled or not. Does not mean it's necessarily heating
-        # self._heater_enabled = \
-        #    bool(self._input_regs['HeatingBatteryActive']['value'])
-        # Current operation mode
-        self._current_operation = self.get_conv_val('OPERATING_MODE')
-        # if self._heating:
-        #    self._current_operation = 'Heating'
-        # elif self._cooling:
-        #    self._current_operation = 'Cooling'
-        # elif self._heat_recovery:
-        #    self._current_operation = 'Recovering'
-        # elif self._input_regs['ActualSetAirSpeed']['value']:
-        #    self._current_operation = 'Fan Only'
-        # else:
-        #    self._current_operation = 'Off'
-
         return ret
 
+
     def get_conv_val(self, name):
-        """Read and convert value."""
+        """Read and convert value.
+        
+        Args:
+            name: Name of value to be read.
+            
+        Returns:
+            Actual value or None.
+        """
         value_entry = self._block_1_input_regs.get(name)
         if value_entry is None:
             value_entry = self._block_2_holding_regs.get(name)
@@ -289,6 +254,7 @@ class StiebelEltronAPI(object):
             return value_entry['value'] * 0.01
 
         return value_entry['value']
+
 
 #    def get_raw_input_register(self, name):
 #        """Get raw register value by name."""
@@ -309,46 +275,46 @@ class StiebelEltronAPI(object):
 #            address=(self._holding_regs[name]['addr']),
 #            value=value)
 
-#    def set_temp(self, temp):
-#        self._conn.write_register(
-#            unit=self._slave,
-#            address=(self._holding_regs['SetAirTemperature']['addr']),
-#            value=round(temp * 10.0))
 
-#    def set_fan_speed(self, fan):
-#        self._conn.write_register(
-#            unit=self._slave,
-#            address=(self._holding_regs['SetAirSpeed']['addr']),
-#            value=fan)
-
+    # Handle room temperature & humidity
     @property
     def get_current_temp(self):
         """Get the current room temperature."""
         if self._update_on_read:
             self.update()
-        return self._current_temp
+        return self.get_conv_val('ACTUAL_ROOM_TEMPERATURE_HC1')
 
     @property
     def get_target_temp(self):
         """Get the target room temperature."""
         if self._update_on_read:
             self.update()
-        return self._target_temp
+        #return self.get_conv_val('SET_ROOM_TEMPERATURE_HC1')
+        return self.get_conv_val('ROOM_TEMP_HEAT_DAY_HC1')
 
-#    @property
-#    def get_filter_hours(self):
-#        """Get the number of hours since filter reset."""
-#        if self._update_on_read:
-#            self.update()
-#        return self._filter_hours
+    def set_target_temp(self, temp):
+        self._conn.write_register(
+            unit=self._slave,
+            address=(self._block_2_holding_regs['ROOM_TEMP_HEAT_DAY_HC1']['addr']),
+            value=round(temp * 10.0))
 
+    @property
+    def get_current_humidity(self):
+        """Get the current room humidity."""
+        if self._update_on_read:
+            self.update()
+        return self.get_conv_val('RELATIVE_HUMIDITY_HC1')
+
+
+    # Handle operation mode
     @property
     def get_operation(self):
         """Return the current mode of operation."""
         if self._update_on_read:
             self.update()
-        return B2_OPERATING_MODE_READ.get(self._current_operation,
-                                          'UNKNOWN')
+
+        op_mode = self.get_conv_val('OPERATING_MODE')
+        return B2_OPERATING_MODE_READ.get(op_mode, 'UNKNOWN')
 
     def set_operation(self, mode):
         """Set the operation mode."""
@@ -357,44 +323,31 @@ class StiebelEltronAPI(object):
             address=(self._block_2_holding_regs['OPERATING_MODE']['addr']),
             value=B2_OPERATING_MODE_WRITE.get(mode))
 
-#    @property
-#    def get_fan_speed(self):
-#        """Return the current fan speed (0-4)."""
-#        if self._update_on_read:
-#            self.update()
-#        return self._current_fan
 
-#    @property
-#    def get_heat_recovery(self):
-#        """Return current heat recovery percentage."""
-#        if self._update_on_read:
-#            self.update()
-#        return self._heat_recovery
-
-#    @property
-#    def get_heating(self):
-#        """Return heater percentage."""
-#        if self._update_on_read:
-#            self.update()
-#        return self._heating
-
-#    @property
-#    def get_heater_enabled(self):
-#        """Return heater enabled."""
-#        if self._update_on_read:
-#            self.update()
-#        return self._heater_enabled
-
-#    @property
-#    def get_cooling(self):
-#        """Cooling active percentage."""
-#        if self._update_on_read:
-#            self.update()
-#        return self._cooling
-
+    # Handle device status
     @property
-    def get_filter_alarm(self):
-        """Change filter alarm."""
+    def get_heating_status(self):
+        """Return heater status."""
         if self._update_on_read:
             self.update()
-        return self._filter_alarm
+        return bool(self.get_conv_val('OPERATING_STATUS') & B3_OPERATING_STATUS['HEATING'])
+
+
+    @property
+    def get_cooling_status(self):
+        """Cooling status."""
+        if self._update_on_read:
+            self.update()
+        return bool(self.get_conv_val('OPERATING_STATUS') & B3_OPERATING_STATUS['COOLING'])
+
+
+    @property
+    def get_filter_alarm_status(self):
+        """Return filter alarm."""
+        if self._update_on_read:
+            self.update()
+
+        filter_mask = (B3_OPERATING_STATUS['FILTER'] |
+                       B3_OPERATING_STATUS['FILTER_EXTRACT_AIR'] |
+                       B3_OPERATING_STATUS['FILTER_VENTILATION_AIR'])
+        return bool(self.get_conv_val('OPERATING_STATUS') & filter_mask)
