@@ -1,0 +1,9 @@
+--index-url https://pypi.python.org/simple/
+
+-e .
+pymodbus
+pytest
+pytest-cov
+httpretty
+flake8
+twisted
