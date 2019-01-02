@@ -4,6 +4,5 @@
 pymodbus
 pytest
 pytest-cov
-httpretty
 flake8
 twisted

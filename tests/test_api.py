@@ -3,7 +3,7 @@ import os
 import time
 import pytest
 
-# Import Modbus mockup server requirements
+# Import modbus mockup server requirements
 from threading import Thread
 from tests.MockModbusServer import MockModbusServer as ModbusServer
 
@@ -11,11 +11,10 @@ from tests.MockModbusServer import MockModbusServer as ModbusServer
 from pymodbus.client.sync import ModbusTcpClient as ModbusClient
 from pystiebeleltron import pystiebeleltron as pyse
 
+# Modbus server connection details
 host_ip = "127.0.0.1" #"192.168.1.20"
 host_port = 5020 #502
 slave = 1
-
-CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class TestStiebelEltronApi:
