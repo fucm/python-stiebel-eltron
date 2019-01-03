@@ -38,7 +38,7 @@ setup(
     long_description=long_description,
     url='https://github.com/fucm/python-stiebel-eltron',
     author='Martin Fuchs',
-    author_email='martin.fuchs@gmx.ch',
+    author_email='martin.fuchs AT gmx.ch',
     license='MIT',
     install_requires=['pymodbus>=2.1.0'],
     tests_require=['tox'],
