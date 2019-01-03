@@ -1,10 +1,19 @@
 language: python
-python:
-  - 3.4
-  - 3.5
-  - 3.6
+matrix:
+  include:
+    - python: 3.4
+      env: TOXENV=py34
+    - python: 3.5
+      env: TOXENV=py35
+    - python: 3.6
+      env: TOXENV=py37
+    - env: TOXENV=flake8
+    - env: TOXENV=pylint
+    - env: TOXENV=coverage
+install:
+  - pip install tox
 script:
- - tox
+  - tox
 # - pytest --cov=pystiebeleleltron --cov-report xml
 #deploy:
   # https://docs.travis-ci.com/user/deployment/pypi/
