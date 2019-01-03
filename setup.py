@@ -6,6 +6,7 @@ import os
 import sys
 
 from setuptools import setup, find_packages
+from setuptools.command.test import test as TestCommand
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -16,6 +17,20 @@ if sys.argv[-1] == 'publish':
     os.system('python3 setup.py sdist upload')
     sys.exit()
 
+
+class Tox(TestCommand):
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        #import here, cause outside the eggs aren't loaded
+        import tox
+        errcode = tox.cmdline(self.test_args)
+        sys.exit(errcode)
+
+
 setup(
     name='pystiebeleltron',
     version='0.0.1.dev0',
@@ -25,7 +40,9 @@ setup(
     author='Martin Fuchs',
     author_email='martin.fuchs@gmx.ch',
     license='MIT',
-    install_requires=[],
+    install_requires=['pymodbus>=2.1.0'],
+    tests_require=['tox'],
+    cmdclass={'test': Tox},
     packages=find_packages(),
     zip_safe=True,
     include_package_data=True,

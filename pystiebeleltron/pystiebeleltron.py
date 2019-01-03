@@ -17,11 +17,11 @@ type | range      | for reading | for writing |        | size 1 | size 5
 8    | 0 to 255   | 1           | 1           | No     | 1      | 5
 """
 
-"""Error - sensor lead is missing or disconnected."""
+# Error - sensor lead is missing or disconnected.
 ERROR_NOTAVAILABLE = -60
-"""Error - short circuit of the sensor lead."""
+# Error - short circuit of the sensor lead.
 ERROR_SHORTCUT = -50
-"""Error - object unavailable."""
+# Error - object unavailable.
 ERROR_OBJ_UNAVAILBLE = 0x8000
 
 UNAVAILABLE_OBJECT = 32768
@@ -179,7 +179,7 @@ B3_BUS_STATUS = {
 }
 
 
-class StiebelEltronAPI(object):
+class StiebelEltronAPI():
     """Stiebel Eltron API."""
 
     def __init__(self, conn, slave, update_on_read=False):
@@ -190,7 +190,6 @@ class StiebelEltronAPI(object):
         self._block_3_input_regs = B3_REGMAP_INPUT
         self._slave = slave
         self._update_on_read = update_on_read
-
 
     def update(self):
         """Request current values from heat pump."""
@@ -230,13 +229,12 @@ class StiebelEltronAPI(object):
 
         return ret
 
-
     def get_conv_val(self, name):
         """Read and convert value.
-        
+
         Args:
             name: Name of value to be read.
-            
+
         Returns:
             Actual value or None.
         """
@@ -254,7 +252,6 @@ class StiebelEltronAPI(object):
             return value_entry['value'] * 0.01
 
         return value_entry['value']
-
 
 #    def get_raw_input_register(self, name):
 #        """Get raw register value by name."""
@@ -275,8 +272,8 @@ class StiebelEltronAPI(object):
 #            address=(self._holding_regs[name]['addr']),
 #            value=value)
 
-
     # Handle room temperature & humidity
+
     @property
     def get_current_temp(self):
         """Get the current room temperature."""
@@ -289,13 +286,15 @@ class StiebelEltronAPI(object):
         """Get the target room temperature."""
         if self._update_on_read:
             self.update()
-        #return self.get_conv_val('SET_ROOM_TEMPERATURE_HC1')
+        # return self.get_conv_val('SET_ROOM_TEMPERATURE_HC1')
         return self.get_conv_val('ROOM_TEMP_HEAT_DAY_HC1')
 
     def set_target_temp(self, temp):
+        """Set the target room temperature (day)(HC1)."""
         self._conn.write_register(
             unit=self._slave,
-            address=(self._block_2_holding_regs['ROOM_TEMP_HEAT_DAY_HC1']['addr']),
+            address=(
+                self._block_2_holding_regs['ROOM_TEMP_HEAT_DAY_HC1']['addr']),
             value=round(temp * 10.0))
 
     @property
@@ -305,8 +304,8 @@ class StiebelEltronAPI(object):
             self.update()
         return self.get_conv_val('RELATIVE_HUMIDITY_HC1')
 
-
     # Handle operation mode
+
     @property
     def get_operation(self):
         """Return the current mode of operation."""
@@ -323,23 +322,23 @@ class StiebelEltronAPI(object):
             address=(self._block_2_holding_regs['OPERATING_MODE']['addr']),
             value=B2_OPERATING_MODE_WRITE.get(mode))
 
-
     # Handle device status
+
     @property
     def get_heating_status(self):
         """Return heater status."""
         if self._update_on_read:
             self.update()
-        return bool(self.get_conv_val('OPERATING_STATUS') & B3_OPERATING_STATUS['HEATING'])
-
+        return bool(self.get_conv_val('OPERATING_STATUS') &
+                    B3_OPERATING_STATUS['HEATING'])
 
     @property
     def get_cooling_status(self):
         """Cooling status."""
         if self._update_on_read:
             self.update()
-        return bool(self.get_conv_val('OPERATING_STATUS') & B3_OPERATING_STATUS['COOLING'])
-
+        return bool(self.get_conv_val('OPERATING_STATUS') &
+                    B3_OPERATING_STATUS['COOLING'])
 
     @property
     def get_filter_alarm_status(self):

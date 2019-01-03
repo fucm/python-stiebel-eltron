@@ -5,7 +5,7 @@ import pytest
 
 # Import modbus mockup server requirements
 from threading import Thread
-from tests.MockModbusServer import MockModbusServer as ModbusServer
+from test.mock_modbus_server import MockModbusServer as ModbusServer
 
 # Import client requirementss
 from pymodbus.client.sync import ModbusTcpClient as ModbusClient

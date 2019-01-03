@@ -23,7 +23,7 @@ class MockModbusServer(object):
     # --------------------------------------------------------------------------- # 
     import logging
     FORMAT = ('%(asctime)-15s %(threadName)-15s'
-            ' %(levelname)-8s %(module)-15s:%(lineno)-8s %(message)s')
+              ' %(levelname)-8s %(module)-15s:%(lineno)-8s %(message)s')
     logging.basicConfig(format=FORMAT)
     log = logging.getLogger()
     log.setLevel(logging.DEBUG)
@@ -89,7 +89,7 @@ class MockModbusServer(object):
             hr=ModbusSequentialDataBlock(0, [200]*3000),
             ir=ModbusSequentialDataBlock(0, [200]*3000))
         context = ModbusServerContext(slaves=store, single=True)
-        
+
         # ----------------------------------------------------------------------- # 
         # initialize the server information
         # ----------------------------------------------------------------------- # 
@@ -102,7 +102,7 @@ class MockModbusServer(object):
         identity.ProductName = 'Pymodbus Server'
         identity.ModelName = 'Pymodbus Server'
         identity.MajorMinorRevision = '1.5'
-        
+
         # ----------------------------------------------------------------------- # 
         # run the server you want
         # ----------------------------------------------------------------------- # 
@@ -112,6 +112,7 @@ class MockModbusServer(object):
 
     def stop_async_server(self):
         StopServer()
+
 
 if __name__ == "__main__":
     mms = MockModbusServer()
