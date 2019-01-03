@@ -3,8 +3,8 @@ python:
   - 3.4
   - 3.5
   - 3.6
-#script:
-# - flake8
+script:
+ - tox
 # - pytest --cov=pystiebeleleltron --cov-report xml
 #deploy:
   # https://docs.travis-ci.com/user/deployment/pypi/
