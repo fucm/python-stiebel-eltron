@@ -1,4 +1,1 @@
---index-url https://pypi.python.org/simple/
-
--e .
-pymodbus
+pymodbus>=2.1.0
