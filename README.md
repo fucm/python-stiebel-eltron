@@ -15,7 +15,7 @@ This module is based on the STIEBEL ELTRON [modbus user manual](https://www.stie
 ## Requirements
 You need to have [Python](https://www.python.org) installed.
 
-* [STIEBEL ELTRON Internet-Service Gateway ISG WEB](https://www.stiebel-eltron.com/en/home/products-solutions/renewables/controller_energymanagement/internet_servicegateway/isg_web.html) with enabled [modbus module](https://www.stiebel-eltron.ch/de/home/service/smart-home/modbus.html)
+* STIEBEL ELTRON Internet-Service Gateway [ISG WEB](https://www.stiebel-eltron.com/en/home/products-solutions/renewables/controller_energymanagement/internet_servicegateway/isg_web.html) with enabled [modbus module](https://www.stiebel-eltron.ch/de/home/service/smart-home/modbus.html)
   * You can call the STIEBEL ELTRON support, if your ISG does not have the modbus module enabled. They upgraded mine for free.
 * STIEBEL ELTRON heatpumpt (compatible). Successfully used devices:
   * LWZ504e
@@ -42,7 +42,6 @@ The sample below shows how to use this Python module.
     unit = pyse.StiebelEltronAPI(client, 1)
     unit.update()
     
-    target_temp = unit.get_target_temp()
     print("get_target_temp: {}".format(unit.get_target_temp))
     
     client.close()
