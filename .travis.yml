@@ -11,17 +11,26 @@ matrix:
       env: TOXENV=py36
 #    - python: 3.7
 #      env: TOXENV=py37
-    - python: 3.4
+    - python: 3.5
       env: TOXENV=flake8
-    - python: 3.4
+    - python: 3.5
       env: TOXENV=pylint
-    - python: 3.4
-      env: TOXENV=coverage
+    #- python: 3.5
+    #  env: TOXENV=coverage
+
 install:
   - pip install tox
+  # - pip install tox-travis
+
 script:
   - tox
-# - pytest --cov=pystiebeleleltron --cov-report xml
+  - pytest --cov=pystiebeleleltron
+  #- coverage run --source icon_font_to_png -m py.test
+  - coverage report -m
+
+after_success:
+  - coveralls
+
 #deploy:
   # https://docs.travis-ci.com/user/deployment/pypi/
   #- provider: pypi
