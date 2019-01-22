@@ -15,8 +15,8 @@ matrix:
       env: TOXENV=flake8
     - python: 3.4
       env: TOXENV=pylint
-#    - python: 3.4
-#      env: TOXENV=coverage
+    - python: 3.4
+      env: TOXENV=coverage
 install:
   - pip install tox
 script:
