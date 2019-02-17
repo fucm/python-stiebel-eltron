@@ -37,7 +37,7 @@ class Tox(TestCommand):
 
 setup(
     name='pystiebeleltron',
-    version='0.0.1.dev0',
+    version='0.0.1.dev1',
     description='Python API for interacting with the Stiebel Eltron ISG web gateway via Modbus for controlling integral ventilation units and heat pumps.',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -54,12 +54,8 @@ setup(
     # https://pypi.org/classifiers/
     classifiers=[
         'Development Status :: 3 - Alpha',
-        'Environment :: Console',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
-        'Operating System :: MacOS :: MacOS X',
-        'Operating System :: Microsoft :: Windows',
-        'Operating System :: POSIX',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
