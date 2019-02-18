@@ -25,7 +25,7 @@ class TestStiebelEltronApi:
 
         mb_s = ModbusServer()
         mb_c = ModbusClient(host=host_ip, port=host_port, timeout=2)
-        api = pyse.StiebelEltronAPI(mb_c, slave)
+        api = pyse.StiebelEltronAPI(mb_c, slave, update_on_read=False)
 
         # Cleanup after last test did run (will run as well, if something fails in setup).
         def fin():
@@ -58,16 +58,16 @@ class TestStiebelEltronApi:
         return api
 
     def test_temperature_read(self, pyse_api):
-        temp = pyse_api.get_current_temp
+        temp = pyse_api.get_current_temp()
         assert temp >= 20.0 and temp < 25.0
 
-        temp = pyse_api.get_target_temp
+        temp = pyse_api.get_target_temp()
         assert temp >= 20.0 and temp < 25.0
 
     #@pytest.mark.skip
     def test_temperature_write(self, pyse_api):
         # Get old target temperature
-        old_temp = pyse_api.get_target_temp
+        old_temp = pyse_api.get_target_temp()
         new_temp = 22.5
 
         # Set new target temperature
@@ -75,7 +75,7 @@ class TestStiebelEltronApi:
         time.sleep(3)
         pyse_api.update()
 
-        mod_temp = pyse_api.get_target_temp
+        mod_temp = pyse_api.get_target_temp()
         assert mod_temp == new_temp
 
         # Restore old target temperature
@@ -84,6 +84,12 @@ class TestStiebelEltronApi:
             time.sleep(3)
             pyse_api.update()
 
+    def test_operation(self, pyse_api):
+        pyse_api.set_operation('DHW')
+        time.sleep(3)
+        pyse_api.update()
+        oper = pyse_api.get_operation()
+        assert oper == 'DHW'
 
     @pytest.mark.skip
     def test_fail(self):

@@ -117,15 +117,7 @@ B2_OPERATING_MODE_READ = {
     0: 'EMERGENCY OPERATION'
 }
 
-B2_OPERATING_MODE_WRITE = {
-    'AUTOMATIC': 11,
-    'STANDBY': 1,
-    'DAY MODE': 3,
-    'SETBACK MODE': 4,
-    'DHW': 5,
-    'MANUAL MODE': 14,
-    'EMERGENCY OPERATION': 0
-}
+B2_OPERATING_MODE_WRITE = {value: key for key, value in B2_OPERATING_MODE_READ.items()}
 
 B2_RESET = {
     'OFF': 0,
@@ -274,19 +266,16 @@ class StiebelEltronAPI():
 
     # Handle room temperature & humidity
 
-    @property
     def get_current_temp(self):
         """Get the current room temperature."""
         if self._update_on_read:
             self.update()
         return self.get_conv_val('ACTUAL_ROOM_TEMPERATURE_HC1')
 
-    @property
     def get_target_temp(self):
         """Get the target room temperature."""
         if self._update_on_read:
             self.update()
-        # return self.get_conv_val('SET_ROOM_TEMPERATURE_HC1')
         return self.get_conv_val('ROOM_TEMP_HEAT_DAY_HC1')
 
     def set_target_temp(self, temp):
@@ -297,7 +286,6 @@ class StiebelEltronAPI():
                 self._block_2_holding_regs['ROOM_TEMP_HEAT_DAY_HC1']['addr']),
             value=round(temp * 10.0))
 
-    @property
     def get_current_humidity(self):
         """Get the current room humidity."""
         if self._update_on_read:
@@ -306,7 +294,6 @@ class StiebelEltronAPI():
 
     # Handle operation mode
 
-    @property
     def get_operation(self):
         """Return the current mode of operation."""
         if self._update_on_read:
@@ -324,7 +311,6 @@ class StiebelEltronAPI():
 
     # Handle device status
 
-    @property
     def get_heating_status(self):
         """Return heater status."""
         if self._update_on_read:
@@ -332,7 +318,6 @@ class StiebelEltronAPI():
         return bool(self.get_conv_val('OPERATING_STATUS') &
                     B3_OPERATING_STATUS['HEATING'])
 
-    @property
     def get_cooling_status(self):
         """Cooling status."""
         if self._update_on_read:
@@ -340,7 +325,6 @@ class StiebelEltronAPI():
         return bool(self.get_conv_val('OPERATING_STATUS') &
                     B3_OPERATING_STATUS['COOLING'])
 
-    @property
     def get_filter_alarm_status(self):
         """Return filter alarm."""
         if self._update_on_read:
