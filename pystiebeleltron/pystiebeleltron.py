@@ -117,7 +117,9 @@ B2_OPERATING_MODE_READ = {
     0: 'EMERGENCY OPERATION'
 }
 
-B2_OPERATING_MODE_WRITE = {value: key for key, value in B2_OPERATING_MODE_READ.items()}
+B2_OPERATING_MODE_WRITE = {
+    value: key for key, value in B2_OPERATING_MODE_READ.items()
+}
 
 B2_RESET = {
     'OFF': 0,
