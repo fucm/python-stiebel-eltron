@@ -91,6 +91,18 @@ class TestStiebelEltronApi:
         oper = pyse_api.get_operation()
         assert oper == 'DHW'
 
+    def test_humidity(self, pyse_api):
+        humidity = pyse_api.get_current_humidity()
+        assert humidity == 20.0
+
+    def test_statuses(self, pyse_api):
+        status = pyse_api.get_heating_status()
+        assert status is False
+        status = pyse_api.get_cooling_status()
+        assert status is True
+        status = pyse_api.get_filter_alarm_status()
+        assert status is False
+
     @pytest.mark.skip
     def test_fail(self):
         assert 0
