@@ -21,18 +21,13 @@ class TestStiebelEltronApi:
     #__slots__ = 'api'
 
     @pytest.fixture(scope="module")
-    def pyse_api(self, request):
-
+    def pymb_s(self, request):
         mb_s = ModbusServer()
-        mb_c = ModbusClient(host=host_ip, port=host_port, timeout=2)
-        api = pyse.StiebelEltronAPI(mb_c, slave, update_on_read=False)
 
         # Cleanup after last test did run (will run as well, if something fails in setup).
         def fin():
-            mb_c.close()
-            #time.sleep(0.5)
-
-            stop_thread = Thread(target=mb_s.stop_async_server, name="StopReactor")
+            stop_thread = Thread(target=mb_s.stop_async_server,
+                                 name="StopReactor")
             stop_thread.start()
             if stop_thread.is_alive():
                 stop_thread.join()
@@ -43,9 +38,25 @@ class TestStiebelEltronApi:
         request.addfinalizer(fin)
 
         # Start Mock Modbus server
-        mms_thread = Thread(target=mb_s.run_async_server, name="MockModbusServer")
+        mms_thread = Thread(target=mb_s.run_async_server,
+                            name="MockModbusServer")
         mms_thread.start()
         time.sleep(0.1)
+
+        return mb_s
+
+    @pytest.fixture(scope="module")
+    def pyse_api(self, request, pymb_s):
+        # parameter pymb_s leads to call of fixture
+        mb_c = ModbusClient(host=host_ip, port=host_port, timeout=2)
+        api = pyse.StiebelEltronAPI(mb_c, slave, update_on_read=True)
+
+        # Cleanup after last test (will run as well, if setup fails).
+        def fin():
+            mb_c.close()
+            time.sleep(0.5)
+
+        request.addfinalizer(fin)
 
         # Connect Modbus client
         connected = mb_c.connect()
@@ -57,52 +68,44 @@ class TestStiebelEltronApi:
 
         return api
 
-    def test_temperature_read(self, pyse_api):
-        temp = pyse_api.get_current_temp()
-        assert temp >= 20.0 and temp < 25.0
+    def test_temperature_read(self, pyse_api, pymb_s):
+        pymb_s.update_input_register(0, 21.5*10)
+        assert pyse_api.get_current_temp() == 21.5
 
-        temp = pyse_api.get_target_temp()
-        assert temp >= 20.0 and temp < 25.0
+        pymb_s.update_holding_register(1001, 22.5*10)
+        assert pyse_api.get_target_temp() == 22.5
 
-    #@pytest.mark.skip
     def test_temperature_write(self, pyse_api):
-        # Get old target temperature
-        old_temp = pyse_api.get_target_temp()
-        new_temp = 22.5
-
-        # Set new target temperature
-        pyse_api.set_target_temp(new_temp)
+        temperature = 22.5
+        pyse_api.set_target_temp(temperature)
         time.sleep(3)
-        pyse_api.update()
 
-        mod_temp = pyse_api.get_target_temp()
-        assert mod_temp == new_temp
-
-        # Restore old target temperature
-        if mod_temp != old_temp:
-            pyse_api.set_target_temp(old_temp)
-            time.sleep(3)
-            pyse_api.update()
+        assert pyse_api.get_target_temp() == temperature
 
     def test_operation(self, pyse_api):
-        pyse_api.set_operation('DHW')
+        operation = 'DHW'
+        pyse_api.set_operation(operation)
         time.sleep(3)
-        pyse_api.update()
-        oper = pyse_api.get_operation()
-        assert oper == 'DHW'
 
-    def test_humidity(self, pyse_api):
-        humidity = pyse_api.get_current_humidity()
-        assert humidity == 20.0
+        assert pyse_api.get_operation() == operation
 
-    def test_statuses(self, pyse_api):
-        status = pyse_api.get_heating_status()
-        assert status is False
-        status = pyse_api.get_cooling_status()
-        assert status is True
-        status = pyse_api.get_filter_alarm_status()
-        assert status is False
+    def test_humidity(self, pyse_api, pymb_s):
+        humidity = 49.5
+        pymb_s.update_input_register(2, humidity*10)
+        assert pyse_api.get_current_humidity() == humidity
 
-    @pytest.mark.skip
-    def test_fail(self):
-        assert 0
+    def test_statuses(self, pyse_api, pymb_s):
+        pymb_s.update_input_register(2000, 0x0004)
+        assert pyse_api.get_heating_status() is True
+        assert pyse_api.get_cooling_status() is False
+        assert pyse_api.get_filter_alarm_status() is False
+
+        pymb_s.update_input_register(2000, 0x0008)
+        assert pyse_api.get_heating_status() is False
+        assert pyse_api.get_cooling_status() is True
+        assert pyse_api.get_filter_alarm_status() is False
+
+        pymb_s.update_input_register(2000, 0x2100)
+        assert pyse_api.get_heating_status() is False
+        assert pyse_api.get_cooling_status() is False
+        assert pyse_api.get_filter_alarm_status() is True

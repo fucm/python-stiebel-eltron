@@ -84,11 +84,9 @@ class MockModbusServer(object):
         #     store = ModbusSlaveContext(..., zero_mode=True)
         # ----------------------------------------------------------------------- # 
         store = ModbusSlaveContext(
-            di=ModbusSequentialDataBlock(0, [200]*3000),
-            co=ModbusSequentialDataBlock(0, [200]*3000),
-            hr=ModbusSequentialDataBlock(0, [200]*3000),
-            ir=ModbusSequentialDataBlock(0, [200]*3000))
-        context = ModbusServerContext(slaves=store, single=True)
+            hr=ModbusSequentialDataBlock(0, [0]*3000),
+            ir=ModbusSequentialDataBlock(0, [0]*3000))
+        self.context = ModbusServerContext(slaves=store, single=True)
 
         # ----------------------------------------------------------------------- # 
         # initialize the server information
@@ -108,10 +106,48 @@ class MockModbusServer(object):
         # ----------------------------------------------------------------------- # 
 
         # TCP Server
-        StartTcpServer(context, identity=identity, address=("localhost", 5020))
+        StartTcpServer(self.context, identity=identity, address=("localhost", 5020))
 
     def stop_async_server(self):
         StopServer()
+
+    def update_context(self, register, address, values):
+        """ Update values of the active context. It should be noted
+        that there is a race condition for the update.
+
+        :param register: Type of register to update,
+                            3: holding register
+                            4: input register
+        :param address: The starting address of the value to be changed
+        :param values: List of values
+        """
+        assert register == 3 or register == 4
+        slave_id = 0x00
+        old_values = self.context[slave_id].getValues(register,
+                                                      address, count=1)
+        self.log.debug("Change value at address {} from {} to {}".format(
+            address, old_values, values))
+        self.context[slave_id].setValues(register, address, values)
+
+    def update_holding_register(self, address, value):
+        """ Update value of a holding register.
+
+        :param address: Address to update
+        :param value: Value to save
+        """
+        self.log.debug("Update holding register: {}:{}".format(address,
+                                                               int(value)))
+        self.update_context(3, address, [int(value)])
+
+    def update_input_register(self, address, value):
+        """ Update value of an input register.
+
+        :param address: Address to update
+        :param value: Value to save
+        """
+        self.log.debug("Update input register: {}:{}".format(address,
+                                                             int(value)))
+        self.update_context(4, address, [int(value)])
 
 
 if __name__ == "__main__":
