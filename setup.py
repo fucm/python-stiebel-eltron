@@ -48,7 +48,7 @@ setup(
     install_requires=['pymodbus>=2.1.0'],
     tests_require=['tox'],
     cmdclass={'test': Tox},
-    packages=find_packages(),
+    packages=find_packages(exclude=('test', 'test.*')),
     zip_safe=True,
     include_package_data=True,
     # https://pypi.org/classifiers/
