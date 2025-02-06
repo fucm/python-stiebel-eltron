@@ -8,7 +8,7 @@ from threading import Thread
 from test.mock_modbus_server import MockModbusServer as ModbusServer
 
 # Import client requirementss
-from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+from pymodbus.client import ModbusTcpClient as ModbusClient
 from pystiebeleltron import pystiebeleltron as pyse
 
 # Modbus server connection details

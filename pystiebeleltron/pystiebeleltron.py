@@ -17,6 +17,8 @@ type | range      | for reading | for writing |        | size 1 | size 5
 8    | 0 to 255   | 1           | 1           | No     | 1      | 5
 """
 
+from pymodbus.client.mixin import ModbusClientMixin
+
 # Error - sensor lead is missing or disconnected.
 ERROR_NOTAVAILABLE = -60
 # Error - short circuit of the sensor lead.
@@ -176,7 +178,7 @@ B3_BUS_STATUS = {
 class StiebelEltronAPI():
     """Stiebel Eltron API."""
 
-    def __init__(self, conn, slave, update_on_read=False):
+    def __init__(self, conn: ModbusClientMixin, slave=1, update_on_read=False):
         """Initialize Stiebel Eltron communication."""
         self._conn = conn
         self._block_1_input_regs = B1_REGMAP_INPUT
@@ -190,15 +192,15 @@ class StiebelEltronAPI():
         ret = True
         try:
             block_1_result_input = self._conn.read_input_registers(
-                unit=self._slave,
+                slave=self._slave,
                 address=B1_START_ADDR,
                 count=len(self._block_1_input_regs)).registers
             block_2_result_holding = self._conn.read_holding_registers(
-                unit=self._slave,
+                slave=self._slave,
                 address=B2_START_ADDR,
                 count=len(self._block_2_holding_regs)).registers
             block_3_result_input = self._conn.read_input_registers(
-                unit=self._slave,
+                slave=self._slave,
                 address=B3_START_ADDR,
                 count=len(self._block_3_input_regs)).registers
         except AttributeError:
@@ -223,7 +225,7 @@ class StiebelEltronAPI():
 
         return ret
 
-    def get_conv_val(self, name):
+    def get_conv_val(self, name: str):
         """Read and convert value.
 
         Args:
@@ -262,7 +264,7 @@ class StiebelEltronAPI():
 #    def set_raw_holding_register(self, name, value):
 #        """Write to register by name."""
 #        self._conn.write_register(
-#            unit=self._slave,
+#            slave=self._slave,
 #            address=(self._holding_regs[name]['addr']),
 #            value=value)
 
@@ -280,10 +282,10 @@ class StiebelEltronAPI():
             self.update()
         return self.get_conv_val('ROOM_TEMP_HEAT_DAY_HC1')
 
-    def set_target_temp(self, temp):
+    def set_target_temp(self, temp: float):
         """Set the target room temperature (day)(HC1)."""
         self._conn.write_register(
-            unit=self._slave,
+            slave=self._slave,
             address=(
                 self._block_2_holding_regs['ROOM_TEMP_HEAT_DAY_HC1']['addr']),
             value=round(temp * 10.0))
@@ -304,10 +306,10 @@ class StiebelEltronAPI():
         op_mode = self.get_conv_val('OPERATING_MODE')
         return B2_OPERATING_MODE_READ.get(op_mode, 'UNKNOWN')
 
-    def set_operation(self, mode):
+    def set_operation(self, mode: str):
         """Set the operation mode."""
         self._conn.write_register(
-            unit=self._slave,
+            slave=self._slave,
             address=(self._block_2_holding_regs['OPERATING_MODE']['addr']),
             value=B2_OPERATING_MODE_WRITE.get(mode))
 
