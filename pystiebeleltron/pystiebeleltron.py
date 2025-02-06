@@ -208,20 +208,14 @@ class StiebelEltronAPI():
             ret = False
             print("Modbus read failed")
         else:
-            for k in self._block_1_input_regs:
-                self._block_1_input_regs[k]['value'] = \
-                    block_1_result_input[
-                        self._block_1_input_regs[k]['addr'] - B1_START_ADDR]
+            for v in self._block_1_input_regs.values():
+                v['value'] = block_1_result_input[v['addr'] - B1_START_ADDR]
 
-            for k in self._block_2_holding_regs:
-                self._block_2_holding_regs[k]['value'] = \
-                    block_2_result_holding[
-                        self._block_2_holding_regs[k]['addr'] - B2_START_ADDR]
+            for v in self._block_2_holding_regs.values():
+                v['value'] = block_2_result_holding[v['addr'] - B2_START_ADDR]
 
-            for k in self._block_3_input_regs:
-                self._block_3_input_regs[k]['value'] = \
-                    block_3_result_input[
-                        self._block_3_input_regs[k]['addr'] - B3_START_ADDR]
+            for v in self._block_3_input_regs.values():
+                v['value'] = block_3_result_input[v['addr'] - B3_START_ADDR]
 
         return ret
 
