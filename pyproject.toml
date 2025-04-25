@@ -33,10 +33,10 @@ dev = [
 ]
 
 [tool.hatch.build.targets.sdist]
-packages = ["src/python_stiebel_eltron"]
+packages = ["src/pystiebeleltron"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/python_stiebel_eltron"]
+packages = ["src/pystiebeleltron"]
 
 [tool.hatch.version]
 path = "src/python_stiebel_eltron/__init__.py"
