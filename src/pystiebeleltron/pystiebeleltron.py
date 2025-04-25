@@ -18,6 +18,9 @@ type | range      | for reading | for writing |        | size 1 | size 5
 """
 
 # Error - sensor lead is missing or disconnected.
+from warnings import deprecated
+
+
 ERROR_NOTAVAILABLE = -60
 # Error - short circuit of the sensor lead.
 ERROR_SHORTCUT = -50
@@ -151,6 +154,7 @@ B3_FAULT_STATUS = {"NO_FAULT": 0, "FAULT": 1}
 B3_BUS_STATUS = {"STATUS OK": 0, "STATUS ERROR": -1, "ERROR-PASSIVE": -2, "BUS-OFF": -3, "PHYSICAL-ERROR": -4}
 
 
+@deprecated("Use wpm.WpmStiebelEltronAPI or lwz.LwzStiebelEltronAPI instead")
 class StiebelEltronAPI:
     """Stiebel Eltron API."""
 
