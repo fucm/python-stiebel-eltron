@@ -76,7 +76,7 @@ def generate_heatpump(
 
     generated_content = template.render(registers=register_blocks, heatpump_type=heatpump_type)
 
-    generated_path = root_path / f"src/python_stiebel_eltron/{heatpump_type.lower()}.py"
+    generated_path = root_path / f"src/pystiebeleltron/{heatpump_type.lower()}.py"
 
     with generated_path.open("w") as f:
         f.write(generated_content)

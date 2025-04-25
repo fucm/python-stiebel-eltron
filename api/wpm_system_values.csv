@@ -19,7 +19,7 @@ Modbus address,Object designation ,WPMsystem,WPM 3,WPM 3i,Comments,Min. value,Ma
 518,ACTUAL BUFFER TEMPERATURE,x,x,x,,0,90,2,°C,r,
 519,SET BUFFER TEMPERATURE,x,x,x,,,,2,°C,r,
 520,HEATING PRESSURE,x,x,x,,,,7,bar,r,
-521,FLOW RATE,x,x,x,,,,2,l/min,r,
+521,FLOW RATE,x,x,x,,,,7,l/min,r,
 522,ACTUAL TEMPERATURE DHW,x,x,x,DHW,10,65,2,°C,r,
 523,SET TEMPERATURE DHW,x,x,x,DHW,10,65,2,°C,r,
 524,ACTUAL TEMPERATURE FAN,x,x,x,Cooling,,,2,K,r,
