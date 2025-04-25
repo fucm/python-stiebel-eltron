@@ -3,6 +3,7 @@
 </p>
 <p align=center>
     <a href="https://pypi.org/project/pystiebeleltron/"><img src="https://img.shields.io/pypi/v/pystiebeleltron.svg"/></a>
+    <a href="https://github.com/fucm/python-stiebel-eltron"><img src="https://github.com/fucm/python-stiebel-eltron/actions/workflows/lint_test/badge.svg"/></a>
     <a href='https://coveralls.io/github/fucm/python-stiebel-eltron?branch=master'><img src='https://coveralls.io/repos/github/fucm/python-stiebel-eltron/badge.svg?branch=master' alt='Coverage Status' /></a>
   <img src="https://img.shields.io/github/license/fucm/python-stiebel-eltron.svg"/></a>
 </p>
