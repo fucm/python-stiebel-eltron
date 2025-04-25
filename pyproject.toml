@@ -39,7 +39,7 @@ packages = ["src/pystiebeleltron"]
 packages = ["src/pystiebeleltron"]
 
 [tool.hatch.version]
-path = "src/python_stiebel_eltron/__init__.py"
+path = "src/pystiebeleltron/__init__.py"
 
 [tool.ruff]
 line-length = 200
