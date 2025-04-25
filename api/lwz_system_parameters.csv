@@ -1,0 +1,29 @@
+"Modbus
+Address",Object designation,LWZ,LWA,Comments,Min. value,Max. value,Data type,Unit,Write/read (w/r),Suffix
+1001,OPERATING MODE,x,x,,0,14,8,,r/w,
+1002,ROOM TEMPERATURE DAY,x,x,"Set room heating, heating circuit 1",10,30,2,°C,r/w,HK1
+1003,ROOM TEMPERATURE NIGHT,x,x,"Set room heating, heating circuit 1",10,30,2,°C,r/w,HK1
+1004,MANUAL HC SET,x,x,Heating circuit 1,10,65,2,°C,r/w,HK1
+1005,ROOM TEMPERATURE DAY,x,x,"Set room heating, heating circuit 2",10,30,2,°C,r/w,HK2
+1006,ROOM TEMPERATURE NIGHT,,,"Set room heating, heating circuit 2",10,30,2,°C,r/w,HK2
+1007,MANUAL HC SET,,,Heating circuit 2,10,65,2,°C,r/w,HK2
+1008,GRADIENT,x,x,Heating curve heating circuit 1,0,5,7,,r/w,HK1
+1009,LOW END,x,x,Heating curve heating circuit 1,0,20,2,°C,r/w,HK1
+1010,GRADIENT,x,x,Heating curve heating circuit 2,0,5,7,,r/w,HK2
+1011,LOW END,x,x,Heating curve heating circuit 2,0,20,2,°C,r/w,HK2
+1012,DHW SET DAY,x,x,DHW,10,55,2,°C,r/w,
+1013,DHW SET NIGHT,x,x,DHW,10,55,2,°C,r/w,
+1014,DHW SET MANUAL,x,x,DHW,10,65,2,°C,r/w,
+1015,MWM SET DAY,x,,only for LWZ 504,50,288,6,l,r/w,
+1016,MWM SET NIGHT,x,,only for LWZ 504,50,288,6,l,r/w,
+1017,MWM SET MANUAL,x,,only for LWZ 504,50,288,6,l,r/w,
+1018,DAY STAGE,x,x,Ventilation,0,3,6,,r/w,
+1019,NIGHT STAGE,x,x,Ventilation,0,3,6,,r/w,
+1020,PARTY STAGE,x,x,Ventilation,0,3,6,,r/w,
+1021,MANUAL STAGE,x,x,Ventilation,0,3,6,,r/w,
+1022,ROOM TEMPERATURE DAY,x,,"HC 1 cooling, only for LWZ with cooling",10,30,2,°C,r/w,HK1 COOLING
+1023,ROOM TEMPERATURE NIGHT,x,,"HC 1 cooling, only for LWZ with cooling",10,30,2,°C,r/w,HK1 COOLING
+1024,ROOM TEMPERATURE DAY,x,,"HC 2 cooling, only for LWZ with cooling",10,30,2,°C,r/w,HK2 COOLING
+1025,ROOM TEMPERATURE NIGHT,x,,"HC 2 cooling, only for LWZ with cooling",10,30,2,°C,r/w,HK2 COOLING
+1026,RESET,x,,only for LWZ 504,0,1,6,,r/w,
+1027,RESTART ISG,x,x,,0,2,6,,r/w,

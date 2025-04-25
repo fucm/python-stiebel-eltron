@@ -1,0 +1,60 @@
+"""Modbus api for stiebel eltron heat pumps. This file is generated. Do not modify it manually."""
+from . import ModbusRegister, ModbusRegisterBlock, StiebelEltronAPI, IsgRegisters, RegisterType, ENERGY_DATA_BLOCK_NAME, VIRTUAL_REGISTER_OFFSET, ENERGY_MANAGEMENT_SETTINGS_REGISTERS, ENERGY_SYSTEM_INFORMATION_REGISTERS, VIRTUAL_TOTAL_AND_DAY_REGISTER_OFFSET
+
+{% for registerblock in registers %}
+class {{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers(IsgRegisters):
+{% for register in registerblock["register_block"] %}
+    {{python_name(register[1], register[11])}} = {{register[0]}} {%if registerblock["name"]=="Energy Data" and register[11][:3]=="LOW" %}
+    {{python_name(register[1], register[11][3:].strip())}} = {{register[0] | int + 100000}}{% endif %} {%if register[1][-3:]=="DAY" %}
+    {{python_name(register[1]+"_AND_TOTAL", register[11].strip())}} = {{register[0] | int + 200001}} {% endif %}  {% endfor %}
+{% endfor %}
+
+
+
+{% for registerblock in registers %}
+{{heatpump_type.upper()}}_{{python_name(registerblock["name"]).upper()}}_REGISTERS = {
+{% for register in registerblock["register_block"] %}
+    {{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers.{{python_name(register[1], register[11])}}: ModbusRegister(address={{register[0]}}, name="{{register[1]}}", unit="{{register[9]}}", min={{float_or_none(register[6])}}, max={{float_or_none(register[7])}}, data_type={{register[8]}}, key={{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers.{{python_name(register[1], register[11])}}),{% endfor %}
+}
+{% endfor %}
+
+
+class {{heatpump_type}}StiebelEltronAPI(StiebelEltronAPI):
+
+    def __init__(self, host: str, port: int = 502, slave: int = 1) -> None:
+        super().__init__([
+            {% for registerblock in registers %}
+                ModbusRegisterBlock(base_address={{registerblock["base_address"]}}, count={{registerblock["count"]}}, name="{{registerblock["name"]}}", registers={{heatpump_type.upper()}}_{{python_name(registerblock["name"]).upper()}}_REGISTERS, register_type={{registerblock["register_type"]}}),{% endfor %}
+                ModbusRegisterBlock(base_address=4000, count=3, name="Energy Management Settings", registers=ENERGY_MANAGEMENT_SETTINGS_REGISTERS, register_type=RegisterType.HOLDING_REGISTER),
+                ModbusRegisterBlock(base_address=5000, count=2, name="Energy System Information", registers=ENERGY_SYSTEM_INFORMATION_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
+            ],
+            host, port, slave)
+
+    async def async_update(self):
+        """Request current values from heat pump."""
+        await super().async_update()
+        for registerblock in self._register_blocks:
+            if registerblock.name == ENERGY_DATA_BLOCK_NAME:
+                registers = [r.value for r in {{heatpump_type}}{{python_class_name(ENERGY_DATA_BLOCK_NAME)}}Registers]
+                registers.sort()
+                for register in registers:
+                    if register > VIRTUAL_REGISTER_OFFSET:
+                        if register > VIRTUAL_TOTAL_AND_DAY_REGISTER_OFFSET:
+                            total_key = {{heatpump_type}}{{python_class_name(ENERGY_DATA_BLOCK_NAME)}}Registers(register - VIRTUAL_TOTAL_AND_DAY_REGISTER_OFFSET + VIRTUAL_REGISTER_OFFSET)
+                            day_key = {{heatpump_type}}{{python_class_name(ENERGY_DATA_BLOCK_NAME)}}Registers(register - VIRTUAL_TOTAL_AND_DAY_REGISTER_OFFSET - 1)
+                            total_value = self._data.get(total_key)
+                            day_value = self._data.get(day_key)
+                            if total_value is not None and day_value is not None:
+                                prev_value = self._previous_data.get({{heatpump_type}}{{python_class_name(ENERGY_DATA_BLOCK_NAME)}}Registers(register))
+                                if prev_value is not None:
+                                    self._data[{{heatpump_type}}{{python_class_name(ENERGY_DATA_BLOCK_NAME)}}Registers(register)] = max(total_value + day_value, prev_value)
+                                else:
+                                    self._data[{{heatpump_type}}{{python_class_name(ENERGY_DATA_BLOCK_NAME)}}Registers(register)] = total_value + day_value
+                        else:
+                            low_key = {{heatpump_type}}{{python_class_name(ENERGY_DATA_BLOCK_NAME)}}Registers(register - VIRTUAL_REGISTER_OFFSET)
+                            high_key = {{heatpump_type}}{{python_class_name(ENERGY_DATA_BLOCK_NAME)}}Registers(register - VIRTUAL_REGISTER_OFFSET + 1)
+                            high_value = self._data.get(high_key)
+                            low_value = self._data.get(low_key)
+                            if high_value is not None and low_value is not None:
+                                self._data[{{heatpump_type}}{{python_class_name(ENERGY_DATA_BLOCK_NAME)}}Registers(register)] = high_value * 1000 + low_value
+

@@ -1,0 +1,25 @@
+Modbus address,Object designation ,WPMsystem,WPM 3,WPM 3i,Comments,Min. value,Max. value,Data type,Unit,Write/ read (w/r),Suffix
+1501,OPERATING MODE,x,x,x,,0,5,8,,r/w,
+1502,COMFORT TEMPERATURE,x,x,x,Heating circuit 1,5,30,2,°C,r/w,HK 1
+1503,ECO TEMPERATURE,x,x,x,Heating circuit 1,5,30,2,°C,r/w,HK 1
+1504,HEATING CURVE RISE,x,x,x,Heating circuit 1,0,3,7,,r/w,HK 1
+1505,COMFORT TEMPERATURE,x,x,x,Heating circuit 2,5,30,2,°C,r/w,HK 2
+1506,ECO TEMPERATURE,x,x,x,Heating circuit 2,5,30,2,°C,r/w,HK 2
+1507,HEATING CURVE RISE,x,x,x,Heating circuit 2,0,3,7,,r/w,HK 2
+1508,FIXED VALUE OPERATION,x,x,x,,20,70,2,°C,r/w,
+1509,DUAL MODE TEMP HZG,,x,x,Observe apllication limits,-40,40,2,°C,r/w,
+1510,COMFORT TEMPERATURE,x,x,x,DHW,10,60,2,°C,r/w,
+1511,ECO TEMPERATURE,x,x,x,DHW,10,60,2,°C,r/w,
+1512,DHW STAGES,x,x,x,,0,6,8,,r/w,
+1513,DUAL MODE TEMP WW,x,x,x,DHW temperatures,-40,40,2,°C,r/w,
+1514,SET FLOW TEMPERATURE,x,x,x,Area cooling,7,25,2,°C,r/w,AREA
+1515,FLOW TEMP HYSTERESIS,,x,x,Area cooling,1,5,2,K,r/w,AREA
+1516,SET ROOM TEMPERATURE,x,x,x,Area cooling,20,30,2,°C,r/w,AREA
+1517,SET FLOW TEMPERATURE,x,x,x,Fan cooling,7,25,2,°C,r/w,FAN
+1518,FLOW TEMP HYSTERESIS,,x,x,Fan cooling,1,5,2,K,r/w,FAN
+1519,SET ROOM TEMPERATURE,x,x,x,Fan cooling,20,30,2,°C,r/w,FAN
+1520,RESET,x,x,x,,1,3,6,,r/w,
+1521,RESTART ISG,x,x,x,,0,2,6,,r/w,
+1550,COMFORT TEMPERATURE,x,x,x,Heating circuit 1,5,30,2,°C,r/w,HK 3
+1551,ECO TEMPERATURE,x,x,x,Heating circuit 1,5,30,2,°C,r/w,HK 3
+1552,HEATING CURVE RISE,x,x,x,Heating circuit 1,0,3,7,,r/w,HK 3

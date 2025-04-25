@@ -5,20 +5,20 @@ import pytest
 
 # Import modbus mockup server requirements
 from threading import Thread
-from test.mock_modbus_server import MockModbusServer as ModbusServer
+from .mock_modbus_server import MockModbusServer as ModbusServer
 
 # Import client requirementss
-from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+from pymodbus.client import ModbusTcpClient as ModbusClient
 from pystiebeleltron import pystiebeleltron as pyse
 
 # Modbus server connection details
-host_ip = "127.0.0.1" #"192.168.1.20"
-host_port = 5020 #502
+host_ip = "127.0.0.1"  # "192.168.1.20"
+host_port = 5020  # 502
 slave = 1
 
 
 class TestStiebelEltronApi:
-    #__slots__ = 'api'
+    # __slots__ = 'api'
 
     @pytest.fixture(scope="module")
     def pymb_s(self, request):
@@ -26,8 +26,7 @@ class TestStiebelEltronApi:
 
         # Cleanup after last test did run (will run as well, if something fails in setup).
         def fin():
-            stop_thread = Thread(target=mb_s.stop_async_server,
-                                 name="StopReactor")
+            stop_thread = Thread(target=mb_s.stop_async_server, name="StopReactor")
             stop_thread.start()
             if stop_thread.is_alive():
                 stop_thread.join()
@@ -38,8 +37,7 @@ class TestStiebelEltronApi:
         request.addfinalizer(fin)
 
         # Start Mock Modbus server
-        mms_thread = Thread(target=mb_s.run_async_server,
-                            name="MockModbusServer")
+        mms_thread = Thread(target=mb_s.run_async_server, name="MockModbusServer")
         mms_thread.start()
         time.sleep(0.1)
 
@@ -69,10 +67,10 @@ class TestStiebelEltronApi:
         return api
 
     def test_temperature_read(self, pyse_api, pymb_s):
-        pymb_s.update_input_register(0, 21.5*10)
+        pymb_s.update_input_register(0, 21.5 * 10)
         assert pyse_api.get_current_temp() == 21.5
 
-        pymb_s.update_holding_register(1001, 22.5*10)
+        pymb_s.update_holding_register(1001, 22.5 * 10)
         assert pyse_api.get_target_temp() == 22.5
 
     def test_temperature_write(self, pyse_api):
@@ -83,7 +81,7 @@ class TestStiebelEltronApi:
         assert pyse_api.get_target_temp() == temperature
 
     def test_operation(self, pyse_api):
-        operation = 'DHW'
+        operation = "DHW"
         pyse_api.set_operation(operation)
         time.sleep(3)
 
@@ -91,7 +89,7 @@ class TestStiebelEltronApi:
 
     def test_humidity(self, pyse_api, pymb_s):
         humidity = 49.5
-        pymb_s.update_input_register(2, humidity*10)
+        pymb_s.update_input_register(2, humidity * 10)
         assert pyse_api.get_current_humidity() == humidity
 
     def test_statuses(self, pyse_api, pymb_s):

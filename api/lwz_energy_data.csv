@@ -1,0 +1,34 @@
+"Modbus
+Address",Object designation,LWZ,LWA,Comments,Min. value,Max. value,Data type,Unit,Write/read (w/r),Suffix
+3001,HEAT METER HTG DAY,x,x,,0,65535,6,kWh,r,
+3002,HEAT METER HTG TTL,x,x,,0,999,6,kWh,r,LOW
+3003,HEAT METER HTG TTL,x,x,,0,65535,6,MWh,r,HI
+3004,HEAT METER DHW DAY,x,x,,0,65535,6,kWh,r,
+3005,HEAT METER DHW TTL,x,x,,0,999,6,kWh,r,LOW
+3006,HEAT METER DHW TTL,x,x,,0,65535,6,MWh,r,HI
+3007,HEAT M BOOST HTG TTL,x,x,,0,999,6,kWh,r,LOW
+3008,HEAT M BOOST HTG TTL,x,x,,0,65535,6,MWh,r,HI
+3009,HEAT M BOOST DHW TTL,x,x,,0,999,6,kWh,r,LOW
+3010,HEAT M BOOST DHW,x,x,,0,65535,6,MWh,r,HI
+3011,HEAT M RECOVERY DAY,x,,,0,65535,6,kWh,r,
+3012,HEAT M RECOVERY TTL,x,x,,0,999,6,kWh,r,LOW
+3013,HEAT M RECOVERY TTL,x,,,0,65535,6,MWh,r,HI
+3014,HM SOLAR HTG DAY,x,,only for LWZ with solar capability,0,65535,6,kWh,r,
+3015,HM SOLAR HTG TOTAL,x,,only for LWZ with solar capability,0,999,6,kWh,r,LOW
+3016,HM SOLAR HTG TOTAL,x,,only for LWZ with solar capability,0,65535,6,MWh,r,HI
+3017,HM SOLAR DHW DAY,x,,only for LWZ with solar capability,0,65535,6,kWh,r,
+3018,HM SOLAR DWH TOTAL,x,,only for LWZ with solar capability,0,999,6,kWh,r,LOW
+3019,HM SOLAR DWH TOTAL,x,,only for LWZ with solar capability,0,65535,6,MWh,r,HI
+3020,HM COOLING TOTAL,x,,only for LWZ with cooling capacity,0,999,6,kWh,r,LOW
+3021,HM COOLING TOTAL,x,,only for LWZ with cooling capacity,0,65535,6,MWh,r,HI
+3022,PWR CON HTG DAY,x,x,,0,65535,6,kWh,r,
+3023,PWR CON HTG TTL,x,x,,0,999,6,kWh,r,LOW
+3024,PWR CON HTG TTL,x,x,,0,65535,6,MWh,r,HI
+3025,PWR CON DHW DAY,x,x,,0,65535,6,kWh,r,
+3026,PWR CON DHW TTL,x,x,,0,999,6,kWh,r,LOW
+3027,PWR CON DHW TTL,x,x,,0,65535,6,MWh,r,HI
+3028,COMPRESSOR HEATING,x,x,,0,65535,6,h,r,
+3029,COMPRESSOR COOLING,x,,only for LWZ with cooling capacity,0,65535,6,h,r,
+3030,COMPRESSOR DHW,x,x,,0,65535,6,h,r,
+3031,ELEC BOOSTER HEATING,x,x,,0,65535,6,h,r,
+3032,ELEC BOOSTER DHW,x,x,,0,65535,6,h,r,
