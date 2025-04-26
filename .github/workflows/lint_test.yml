@@ -1,0 +1,63 @@
+name: "Lint"
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+
+  ruff:
+    name: "Ruff"
+    runs-on: "ubuntu-latest"
+    steps:
+        - name: "Checkout the repository"
+          uses: "actions/checkout@v4.2.2"
+
+        - name: Install uv
+          uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v3
+
+        - name: Set up Python
+          run: uv python install 3.13
+
+        - name: Install the project
+          run: uv sync --all-extras --dev
+
+        - name: "Run ruff"
+          run: uvx ruff check .
+
+        - name: "Format with ruff"
+          run: uvx ruff format . --check
+
+  tests:
+    runs-on: "ubuntu-latest"
+    name: Run tests
+    steps:
+      - name: Check out code from GitHub
+        uses: "actions/checkout@v4.2.2"
+      - name: Install uv
+        uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v3
+
+      - name: Set up Python
+        run: uv python install 3.13
+
+      - name: Install the project
+        run: uv sync --all-extras --dev
+
+      - name: "Run ruff"
+        run: uvx ruff check .
+
+      - name: "Format with ruff"
+        run: uvx ruff format . --check
+
+      - name: Run tests
+        run: |
+          uv run pytest \
+            -qq \
+            --durations=10 \
+            -o console_output_style=count \
+            -p no:sugar \
+            tests

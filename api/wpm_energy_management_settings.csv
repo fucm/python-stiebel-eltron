@@ -1,0 +1,4 @@
+Modbus address,Object designation ,WPMsystem,WPM 3,WPM 3i,Comments,Min. value,Max. value,Data type,Unit,Write/ read (w/r),Suffix
+4001,SWITCH SG READY ON AND OFF,x,x,x,,0,1,6,,r/w,
+4002,SG READY INPUT 1,x,x,x,,0,1,6,,r/w,
+4003,SG READY INPUT 2,x,x,x,,0,1,6,,r/w,

@@ -1,0 +1,54 @@
+[project]
+name = "python-stiebel-eltron"
+dynamic = ["version"]
+description = "Python API for interacting with the Stiebel Eltron ISG web gateway via Modbus for controlling integral ventilation units and heat pumps."
+readme = "README.md"
+authors = [
+    { name = "Paul Frank", email = "pail@gmx.net" },
+    { name = "'Martin Fuchs", email = ""}
+]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.12",
+]
+keywords = ["energy assistant", "home assistant"]
+requires-python = ">=3.13"
+dependencies = [
+    "pymodbus>=3.8.3",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "jinja2>=3.1.5",
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.26.0",
+    "pytest-mock>=3.14.0",
+    "ruff>=0.9.6",
+]
+
+[tool.hatch.build.targets.sdist]
+packages = ["src/pystiebeleltron"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pystiebeleltron"]
+
+[tool.hatch.version]
+path = "src/pystiebeleltron/__init__.py"
+
+[tool.ruff]
+line-length = 200
+
+[tool.pytest.ini_options]
+
+pythonpath = [
+  ".", "src"
+]
+testpaths = [
+    "tests"
+]

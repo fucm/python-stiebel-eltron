@@ -1,0 +1,7 @@
+"Modbus
+Address",Object designation,LWZ,LWA,Comments,Min. value,Max. value,Data type,Unit,Write/read (w/r),Suffix
+2001,OPERATING STATUS,x,x,bit-coded,0,65535,6,,r,
+2002,FAULT STATUS,x,x,System fault,0,1,6,,r,
+2003,BUS STATUS,x,x,CAN bus status,-4,0,6,,r,
+2004,DEFROST INITIATED,x,x,defrost signal,0,1,6,,r,
+2005,OPERATING STATUS 2,x,x,bit-coded,0,65535,6,,r,

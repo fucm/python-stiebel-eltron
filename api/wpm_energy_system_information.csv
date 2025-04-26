@@ -1,0 +1,3 @@
+Modbus address,Object designation ,WPMsystem,WPM 3,WPM 3i,Comments,Min. value,Max. value,Data type,Unit,Write/ read (w/r),Suffix
+5001,SG READY OPERATING STATE,x,x,x,,1,4,6,,r,
+5002,CONTROLLER IDENTIFICATION,x,x,x,,,,6,,r,

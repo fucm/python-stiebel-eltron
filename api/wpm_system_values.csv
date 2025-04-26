@@ -1,0 +1,111 @@
+Modbus address,Object designation ,WPMsystem,WPM 3,WPM 3i,Comments,Min. value,Max. value,Data type,Unit,Write/ read (w/r),Suffix
+501,ACTUAL TEMPERATURE FE7,x,x,x,,,,2,°C,r,
+502,SET TEMPERATURE FE7,x,x,x,,,,2,°C,r,
+503,ACTUAL TEMPERATURE FEK,,x,x,,,,2,°C,r,
+504,SET TEMPERATURE FEK,,x,x,,,,2,°C,r,
+505,RELATIVE HUMIDITY,,x,x,,,,2,%,r,
+506,DEW POINT TEMPERATURE,,x,x,,-40,30,2,°C,r,
+507,OUTSIDE TEMPERATURE,x,x,x,,-60,80,2,°C,r,
+508,ACTUAL TEMPERATURE HK 1,x,x,x,,0,40,2,°C,r,
+509,SET TEMPERATURE HK 1,,,x,,0,65,2,°C,r,WPM3I
+510,SET TEMPERATURE HK 1,x,x,,,0,40,2,°C,r,
+511,ACTUAL TEMPERATURE HK 2,x,x,x,,0,90,2,°C,r,
+512,SET TEMPERATURE HK 2,x,x,x,,0,65,2,°C,r,
+513,ACTUAL FLOW TEMPERATURE WP,x,x,x,"MFG, if available",,,2,°C,r,
+514,ACTUAL FLOW TEMPERATURE NHZ,x,x,x,"MFG, if available",,,2,°C,r,
+515,ACTUAL FLOW TEMPERATURE,x,x,x,,,,2,°C,r,
+516,ACTUAL RETURN TEMPERATURE,x,x,x,,0,90,2,°C,r,
+517,SET FIXED TEMPERATURE,x,x,x,,20,50,2,°C,r,
+518,ACTUAL BUFFER TEMPERATURE,x,x,x,,0,90,2,°C,r,
+519,SET BUFFER TEMPERATURE,x,x,x,,,,2,°C,r,
+520,HEATING PRESSURE,x,x,x,,,,7,bar,r,
+521,FLOW RATE,x,x,x,,,,7,l/min,r,
+522,ACTUAL TEMPERATURE DHW,x,x,x,DHW,10,65,2,°C,r,
+523,SET TEMPERATURE DHW,x,x,x,DHW,10,65,2,°C,r,
+524,ACTUAL TEMPERATURE FAN,x,x,x,Cooling,,,2,K,r,
+525,SET TEMPERATURE FAN,x,x,x,Cooling,7,25,2,K,r,
+526,ACTUAL TEMPERATURE AREA,x,x,x,Cooling,,,2,K,r,
+527,SET TEMPERATURE AREA,x,x,x,Cooling,,,2,K,r,
+528,COLLECTOR TEMPERATURE,,x,,Solar thermal,0,90,2,°C,r,
+529,CYLINDER TEMPERATURE,,x,,Solar thermal,0,90,2,°C,r,
+530,RUNTIME,,x,,,,,6,h,r,
+531,ACTUAL TEMPERATURE EXTERNAL,x,x,,External heat source,10,90,2,°C,r,
+532,SET TEMPERATURE EXTERNAL,x,x,,External heat source,,,2,K,r,
+533,APPLICATION LIMIT HZG,x,x,x,Lower heating limit,-40,40,2,°C,r,
+534,APPLICATION LIMIT WW,x,x,x,Lower DHW limit,-40,40,2,°C,r,
+535,RUNTIME,x,x,,External heat source,,,6,h,r,EHS
+536,SOURCE TEMPERATURE,x,x,x,,,,2,°C,r,
+537,MIN SOURCE TEMPERATURE,x,x,x,,-10,10,2,°C,r,
+538,SOURCE PRESSURE,x,x,x,,,,7,bar,r,
+539,HOT GAS TEMPERATURE,,,x,,,,2,°C,r,
+540,HIGH PRESSURE,,,x,,,,2,bar,r,
+541,LOW PRESSURE,,,x,,,,2,bar,r,
+542,RETURN TEMPERATURE,x,x,,Heat pump 1,,,2,°C,r,HP1
+543,FLOW TEMPERATURE,x,x,,Heat pump 1,,,2,°C,r,HP1
+544,HOT GAS TEMPERATURE,x,x,,Heat pump 1,,,2,°C,r,HP1
+545,LOW PRESSURE,x,x,,Heat pump 1,,,7,bar,r,HP1
+546,MEAN PRESSURE,x,x,,Heat pump 1,,,7,bar,r,HP1
+547,HIGH PRESSURE,x,x,,Heat pump 1,,,7,bar,r,HP1
+548,WP WATER FLOW RATE,x,x,,Heat pump 1,,,2,l/min,r,HP1
+549,RETURN TEMPERATURE,x,x,,Heat pump 2,,,2,°C,r,HP2
+550,FLOW TEMPERATURE,x,x,,Heat pump 2,,,2,°C,r,HP2
+551,HOT GAS TEMPERATURE,x,x,,Heat pump 2,,,2,°C,r,HP2
+552,LOW PRESSURE,x,x,,Heat pump 2,,,7,bar,r,HP2
+553,MEAN PRESSURE,x,x,,Heat pump 2,,,7,bar,r,HP2
+554,HIGH PRESSURE,x,x,,Heat pump 2,,,7,bar,r,HP2
+555,WP WATER FLOW RATE,x,x,,Heat pump 2,,,2,l/min,r,HP2
+556,RETURN TEMPERATURE,x,x,,Heat pump 3,,,2,°C,r,HP3
+557,FLOW TEMPERATURE,x,x,,Heat pump 3,,,2,°C,r,HP3
+558,HOT GAS TEMPERATURE,x,x,,Heat pump 3,,,2,°C,r,HP3
+559,LOW PRESSURE,x,x,,Heat pump 3,,,7,bar,r,HP3
+560,MEAN PRESSURE,x,x,,Heat pump 3,,,7,bar,r,HP3
+561,HIGH PRESSURE,x,x,,Heat pump 3,,,7,bar,r,HP3
+562,WP WATER FLOW RATE,x,x,,Heat pump 3,,,2,l/min,r,HP3
+563,RETURN TEMPERATURE,x,x,,Heat pump 4,,,2,°C,r,HP4
+564,FLOW TEMPERATURE,x,x,,Heat pump 4,,,2,°C,r,HP4
+565,HOT GAS TEMPERATURE,x,x,,Heat pump 4,,,2,°C,r,HP4
+566,LOW PRESSURE,x,x,,Heat pump 4,,,7,bar,r,HP4
+567,MEAN PRESSURE,x,x,,Heat pump 4,,,7,bar,r,HP4
+568,HIGH PRESSURE,x,x,,Heat pump 4,,,7,bar,r,HP4
+569,WP WATER FLOW RATE,x,x,,Heat pump 4,,,2,l/min,r,HP4
+570,RETURN TEMPERATURE,x,x,,Heat pump 5,,,2,°C,r,HP5
+571,FLOW TEMPERATURE,x,x,,Heat pump 5,,,2,°C,r,HP5
+572,HOT GAS TEMPERATURE,x,x,,Heat pump 5,,,2,°C,r,HP5
+573,LOW PRESSURE,x,x,,Heat pump 5,,,7,bar,r,HP5
+574,MEAN PRESSURE,x,x,,Heat pump 5,,,7,bar,r,HP5
+575,HIGH PRESSURE,x,x,,Heat pump 5,,,7,bar,r,HP5
+576,WP WATER RATE,x,x,,Heat pump 5,,,2,l/min,r,HP5
+577,RETURN TEMPERATURE,x,x,,Heat pump 6,,,2,°C,r,HP6
+578,FLOW TEMPERATURE,x,x,,Heat pump 6,,,2,°C,r,HP6
+579,HOT GAS,x,x,,Heat pump 6,,,2,°C,r,HP6
+580,LOW PRESSURE,x,x,,Heat pump 6,,,7,bar,r,HP6
+581,MEAN PRESSURE,x,x,,Heat pump 6,,,7,bar,r,HP6
+582,HIGH PRESSURE,x,x,,Heat pump 6,,,7,bar,r,HP6
+583,WP WATER FLOW RATE,x,x,,Heat pump 6,,,2,l/min,r,HP6
+584,ACTUAL TEMPERATURE,x,,,"Room temperature, heating circuit 1",,,2,°C,r,ROOM TEMP HC1
+585,SET TEMPERATURE,x,,,"Room temperature, heating circuit 1",,,2,°C,r,ROOM TEMP HC1
+586,RELATIVE HUMIDITY,x,,,"Room temperature, heating circuit 1",,,2,%,r,ROOM TEMP HC1
+587,DEW POINT TEMPERATURE,x,,,"Room temperature, heating circuit 1",,,2,°C,r,ROOM TEMP HC1
+588,ACTUAL TEMPERATURE,x,,,"Room temperature, heating circuit 2",,,2,°C,r,ROOM TEMP HC2
+589,SET TEMPERATURE,x,,,"Room temperature, heating circuit 2",,,2,°C,r,ROOM TEMP HC2
+590,RELATIVE HUMIDITY,x,,,"Room temperature, heating circuit 2",,,2,%,r,ROOM TEMP HC2
+591,DEW POINT TEMPERATURE,x,,,"Room temperature, heating circuit 2",,,2,°C,r,ROOM TEMP HC2
+592,ACTUAL TEMPERATURE,x,,,"Room temperature, heating circuit 3",,,2,°C,r,ROOM TEMP HC3
+593,SET TEMPERATURE,x,,,"Room temperature, heating circuit 3",,,2,°C,r,ROOM TEMP HC3
+594,RELATIVE HUMIDITY,x,,,"Room temperature, heating circuit 3",,,2,%,r,ROOM TEMP HC3
+595,DEW POINT TEMPERATURE,x,,,"Room temperature, heating circuit 3",,,2,°C,r,ROOM TEMP HC3
+596,ACTUAL TEMPERATURE,x,,,"Room temperature, heating circuit 4",,,2,°C,r,ROOM TEMP HC4
+597,SET TEMPERATURE,x,,,"Room temperature, heating circuit 4",,,2,°C,r,ROOM TEMP HC4
+598,RELATIVE HUMIDITY,x,,,"Room temperature, heating circuit 4",,,2,%,r,ROOM TEMP HC4
+599,DEW POINT TEMPERATURE,x,,,"Room temperature, heating circuit 4",,,2,°C,r,ROOM TEMP HC4
+600,ACTUAL TEMPERATURE,x,,,"Room temperature, heating circuit 5",,,2,°C,r,ROOM TEMP HC5
+601,SET TEMPERATURE,x,,,"Room temperature, heating circuit 5",,,2,°C,r,ROOM TEMP HC5
+602,RELATIVE HUMIDITY,x,,,"Room temperature, heating circuit 5",,,2,%,r,ROOM TEMP HC5
+603,DEW POINT TEMPERATURE,x,,,"Room temperature, heating circuit 5",,,2,°C,r,ROOM TEMP HC5
+604,SET TEMPERATURE,x,,,"Room temperature, cooling circuit 1",,,2,°C,r,ROOM TEMP COOLING1
+605,SET TEMPERATURE,x,,,"Room temperature, cooling circuit 2",,,2,°C,r,ROOM TEMP COOLING2
+606,SET TEMPERATURE,x,,,"Room temperature, cooling circuit 3",,,2,°C,r,ROOM TEMP COOLING3
+607,SET TEMPERATURE,x,,,"Room temperature, cooling circuit 4",,,2,°C,r,ROOM TEMP COOLING4
+608,SET TEMPERATURE,x,,,"Room temperature, cooling circuit 5",,,2,°C,r,ROOM TEMP COOLING5
+609,ACTUAL TEMPERATURE HK 3,x,,,,0,90,2,°C,r,
+610,SET TEMPERATURE HK 3,x,,,,0,65,2,°C,r,
