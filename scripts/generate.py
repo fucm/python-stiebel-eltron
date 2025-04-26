@@ -49,6 +49,16 @@ def get_base_address(registers: list) -> int:
     return result - 1
 
 
+def get_block_len(registers: list) -> int:
+    """Get the base address from a register block."""
+    base = 35000
+    highest = 0
+    for register in registers:
+        base = min(base, int(register[0]))
+        highest = max(highest, int(register[0]))
+    return highest - base + 1
+
+
 def generate_heatpump(
     root_path: Path,
     template: Template,
@@ -67,7 +77,7 @@ def generate_heatpump(
         register_blocks.append(
             {
                 "name": modbus_file.name,
-                "count": len(api_data),
+                "count": get_block_len(api_data),
                 "base_address": get_base_address(api_data),
                 "register_block": api_data,
                 "register_type": modbus_file.register_type,
