@@ -37,12 +37,12 @@ class Tox(TestCommand):
 
 setup(
     name='pystiebeleltron',
-    version='0.1.0',
+    version='0.1.1',
     description='Python API for interacting with the Stiebel Eltron ISG web gateway via Modbus for controlling integral ventilation units and heat pumps.',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/fucm/python-stiebel-eltron',
-    author='Martin Fuchs',
+    url='https://github.com/ThyMYthOS/python-stiebel-eltron',
+    author='Martin Fuchs, Manuel Stahl',
     license='MIT',
     python_requires='>=3.8',
     install_requires=['pymodbus>=3.1.0'],
