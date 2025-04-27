@@ -3,9 +3,9 @@
 </p>
 <p align=center>
     <a href="https://pypi.org/project/pystiebeleltron/"><img src="https://img.shields.io/pypi/v/pystiebeleltron.svg"/></a>
-    <a href="https://travis-ci.org/fucm/python-stiebel-eltron"><img src="https://img.shields.io/travis/fucm/python-stiebel-eltron.svg"/></a>
-    <a href='https://coveralls.io/github/fucm/python-stiebel-eltron?branch=master'><img src='https://coveralls.io/repos/github/fucm/python-stiebel-eltron/badge.svg?branch=master' alt='Coverage Status' /></a>
-  <img src="https://img.shields.io/github/license/fucm/python-stiebel-eltron.svg"/></a>
+    <a href="https://github.com/ThyMYthOS/python-stiebel-eltron/actions/workflows/test-python-package.yml"><img src="https://github.com/ThyMYthOS/python-stiebel-eltron/actions/workflows/test-python-package.yml/badge.svg"/></a>
+    <!--a href='https://coveralls.io/github/fucm/python-stiebel-eltron?branch=master'><img src='https://coveralls.io/repos/github/fucm/python-stiebel-eltron/badge.svg?branch=master' alt='Coverage Status' /></a>
+  <img src="https://img.shields.io/github/license/ThyMYthOS/python-stiebel-eltron.svg"/></a Maybe use https://github.com/marketplace/actions/coverage-badge-->
 </p>
 
 # python-stiebel-eltron
@@ -42,9 +42,9 @@ The sample below shows how to use this Python module.
 
     unit = pyse.StiebelEltronAPI(client, 1)
     unit.update()
-    
+
     print("get_target_temp: {}".format(unit.get_target_temp))
-    
+
     client.close()
 ```
 

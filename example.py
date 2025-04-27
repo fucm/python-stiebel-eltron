@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import time
 from pystiebeleltron import pystiebeleltron as pyse
-from pymodbus.client.sync import ModbusTcpClient as ModbusClient
+from pymodbus.client import ModbusTcpClient as ModbusClient
 
 host_ip = "192.168.1.20"
 host_port = 502
